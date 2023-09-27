@@ -36,4 +36,33 @@ return [
         'success' => 'Details Fetched Successfully',
         'failed'  => 'No Data Found',
     ],
+
+    
+    'jwt' => [
+        'TokenNotSet' => 'Bearer Token Not Set',
+        'InvalidToken' => 'Invalid Bearer Token',
+        'expiredToken' => 'Bearer Token Expired!',
+        'TokenNotFound' => 'Bearer Token Not Found'
+    ],
+
+    'login' => [
+        'success' => 'Login Successful',
+        'failed'  => 'Login Faild',
+        'not-found' => 'User Not Found, Please Register First...',
+        'invalid' => 'Password Does Not Match!',
+        'inactive' => 'Account blocked by Admin',
+        'not-verified' => 'Email not Verified, please verify it firts...',
+        'not-social' => 'Unable to Find Social Account',
+        'invalid-social' => 'Social Id Does Not Match, Please try again...',
+        'incmail' => 'Invalid Email Address',
+    ],
+
+    'change-password' => [
+        'success' => 'Password Updated Successfully',
+        'failed'  => 'Unable to update Password, please try again...',
+        'not-found' => 'User Not Found, Please Register First...',
+        'invalid' => 'Old Password Does Not Match!',
+        'inactive' => 'Account blocked by Admin',
+        'not-verified' => 'Email not Verified, please verify it firts...'
+    ],
 ];

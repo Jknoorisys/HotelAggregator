@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\admin\AuthController;
+use App\Http\Controllers\api\admin\ProfileController;
 use App\Http\Controllers\api\hotel_beds\BookingController;
 use App\Http\Controllers\api\hotel_beds\ContentController;
 use Illuminate\Http\Request;
@@ -71,5 +72,10 @@ Route::middleware(['localization'])->group(function () {
     // Admin APIs
     Route::prefix('admin')->group(function () {
         Route::post('login' , [AuthController::class, 'login']);
+        Route::group(['middleware' => 'jwt.verify'], function () {
+            Route::post('changepassword', [ProfileController::class, 'changePassword']);
+            Route::post('getProfile', [ProfileController::class, 'getProfile']);
+
+        });
     });
 });
