@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('logo');
             $table->text('JWT_token');
             $table->string('password');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

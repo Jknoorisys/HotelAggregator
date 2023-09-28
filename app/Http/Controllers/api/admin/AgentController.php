@@ -14,7 +14,12 @@ class AgentController extends Controller
     public function add(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'admin_id'   => ['required','alpha_dash', Rule::notIn('undefined')],
+            'name'      => ['required', 'string', 'max:255'],
+            'email'     => ['required', 'email', 'max:255', Rule::unique('users')],
+            'phone'     => ['required', 'numeric', 'digits:10', Rule::unique('users')],
+            'password'  => ['required', 'string', 'min:8', 'confirmed'],
+            'photo'     => ['nullable', 'image', 'mimes:jpeg,png,jpg,svg', 'max:2048'],
+            'logo'      => ['nullable', 'image', 'mimes:jpeg,png,jpg,svg', 'max:2048'],
         ]);
 
         if ($validator->fails()) {
