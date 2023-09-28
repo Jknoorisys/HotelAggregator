@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\admin\AgentController;
 use App\Http\Controllers\api\admin\AuthController;
 use App\Http\Controllers\api\admin\ProfileController;
 use App\Http\Controllers\api\hotel_beds\BookingController;
@@ -76,6 +77,10 @@ Route::middleware(['localization'])->group(function () {
             Route::post('change-password', [ProfileController::class, 'changePassword']);
             Route::post('profile', [ProfileController::class, 'getProfile']);
 
+            // Manage Agents
+            Route::prefix('agent')->group(function () {
+                Route::post('add' , [AgentController::class, 'add']);
+            });
         });
     });
 });
