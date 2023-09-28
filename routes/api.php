@@ -73,8 +73,8 @@ Route::middleware(['localization'])->group(function () {
     Route::prefix('admin')->group(function () {
         Route::post('login' , [AuthController::class, 'login']);
         Route::group(['middleware' => 'jwt.verify'], function () {
-            Route::post('changepassword', [ProfileController::class, 'changePassword']);
-            Route::post('getProfile', [ProfileController::class, 'getProfile']);
+            Route::post('change-password', [ProfileController::class, 'changePassword']);
+            Route::post('profile', [ProfileController::class, 'getProfile']);
 
         });
     });
