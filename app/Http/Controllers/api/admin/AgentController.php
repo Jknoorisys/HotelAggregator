@@ -227,9 +227,11 @@ class AgentController extends Controller
             $update = $agent->update($data);
     
             if ($update) {
+                $agent->fresh();
                 return response()->json([
                     'status'    => 'success',
                     'message'   => trans('msg.update.success'),
+                    'data'      => $agent,
                 ], 200);
             } else {
                 return response()->json([
