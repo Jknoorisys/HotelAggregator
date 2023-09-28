@@ -24,9 +24,29 @@ return [
         'TokenNotFound' => 'Bearer Token Not Found'
     ],
 
+    'email' => [
+        'registration-subject' => 'Your Agent Credentials For Hotel Aggregator',
+        'salutation' => 'Hello',
+        'email' => 'Your Email',
+        'password' => 'Your Password',
+        'registration-msg' => 'Please keep your credentials secure.',
+        'Login' => 'Login',
+        'registration-thanks' => 'Thank you for using our service!'
+    ],
+
     'list' => [
         'success' => 'List Fetched Successfully',
         'failed'  => 'No Data Found',
+    ],
+
+    'add' => [
+        'success' => 'Details Added Successfully',
+        'failed'  => 'Add Failed',
+    ],
+
+    'update' => [
+        'success' => 'Details Updated Successfully',
+        'failed'  => 'Update Failed',
     ],
 
     'booking' => [
