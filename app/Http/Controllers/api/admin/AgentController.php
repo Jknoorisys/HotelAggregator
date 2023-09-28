@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\api\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin;
 use App\Models\User;
+use App\Notifications\AdminNotification;
 use App\Notifications\AgentRegistration;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -78,6 +80,15 @@ class AgentController extends Controller
 
             if ($agent) {
                 $agent->notify(new AgentRegistration($name, $email, $password));
+
+                $message = [
+                    'title' => trans('msg.notification.agent_registered_title'),
+                    'message' => trans('msg.notification.agent_registered_message', ['name' => $name]),
+                ];
+
+                $admin = Admin::first();
+                $admin->notify(new AdminNotification($message));
+
                 return response()->json([
                     'status'    => 'success',
                     'message'   => trans('msg.add.success'),

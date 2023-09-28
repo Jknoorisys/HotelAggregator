@@ -40,13 +40,13 @@ class AgentRegistration extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->subject(trans('msg.email.registration-subject'))
-                    ->greeting(trans('msg.email.salutation').' ' . $this->name)
-                    ->line(trans('msg.email.email').': ' . $this->email)
-                    ->line(trans('msg.email.password') .': ' . $this->password)
-                    ->line(trans('msg.email.registration-msg'))
-                    ->action(trans('msg.email.Login'), route('/'))
-                    ->line(trans('msg.email.registration-thanks'));
+                ->subject(trans('msg.email.agent_credentials.subject'))
+                ->line(trans('msg.email.agent_credentials.greeting', ['name' => $this->name]))
+                ->line(trans('msg.email.agent_credentials.email', ['email' => $this->email]))
+                ->line(trans('msg.email.agent_credentials.password', ['password' => $this->password]))
+                ->line(trans('msg.email.agent_credentials.keep_secure'))
+                ->action(trans('msg.email.agent_credentials.login'), route('/'))
+                ->line(trans('msg.email.agent_credentials.thank_you'));
     }
 
     /**

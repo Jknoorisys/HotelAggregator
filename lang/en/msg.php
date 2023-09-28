@@ -25,13 +25,20 @@ return [
     ],
 
     'email' => [
-        'registration-subject' => 'Your Agent Credentials For Hotel Aggregator',
-        'salutation' => 'Hello',
-        'email' => 'Your Email',
-        'password' => 'Your Password',
-        'registration-msg' => 'Please keep your credentials secure.',
-        'Login' => 'Login',
-        'registration-thanks' => 'Thank you for using our service!'
+        'agent_credentials' => [
+            'subject' => 'Your Agent Credentials',
+            'greeting' => 'Hello :name',
+            'email' => 'Your Email: :email',
+            'password' => 'Your Password: :password',
+            'keep_secure' => 'Please keep your credentials secure.',
+            'login' => 'Login',
+            'thank_you' => 'Thank you for using our service!',
+        ],
+    ],
+
+    'notification' => [
+        'agent_registered_title' => 'Agent Registration',
+        'agent_registered_message' => 'Agent :name registered successfully.',
     ],
 
     'list' => [
