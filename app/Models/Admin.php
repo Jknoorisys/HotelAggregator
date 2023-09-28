@@ -25,7 +25,7 @@ class Admin extends Model implements JWTSubject
         'name',
         'email',
         'password',
-        'token',
+        'JWT_token',
     ];
 
     /**
@@ -34,8 +34,9 @@ class Admin extends Model implements JWTSubject
      * @var array<int, string>
      */
     protected $hidden = [
+        'created_at',
+        'updated_at',
         'password',
-        'token'
     ];
 
     /**

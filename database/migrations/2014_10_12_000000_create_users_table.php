@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('phone')->unique();
             $table->string('photo');
             $table->string('logo');
-            $table->text('token');
+            $table->text('JWT_token');
             $table->string('password');
             $table->timestamps();
         });

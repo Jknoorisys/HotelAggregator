@@ -43,6 +43,8 @@ class AuthController extends Controller
                     );
 
                     $admin->JWT_token = $service->getSignedAccessTokenForUser($admin, $claims);
+                    $admin->save();
+
                     return response()->json([
                         'status'    => 'success',
                         'message'   => trans('msg.login.success'),
