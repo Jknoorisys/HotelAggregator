@@ -45,6 +45,7 @@ class Admin extends Model implements JWTSubject
      */
     protected $casts = [
         'id' => 'string', // Cast the UUID as a string
+        'password' => 'hashed',
     ];
 
     protected static function boot()
