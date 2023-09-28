@@ -23,11 +23,9 @@ class Admin extends Model implements JWTSubject
      */
     protected $fillable = [
         'name',
-        'photo',
-        'phone',
         'email',
         'password',
-        
+        'token',
     ];
 
     /**
@@ -37,6 +35,7 @@ class Admin extends Model implements JWTSubject
      */
     protected $hidden = [
         'password',
+        'token'
     ];
 
     /**

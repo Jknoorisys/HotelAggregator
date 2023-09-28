@@ -16,6 +16,13 @@ return [
     'localization' => 'language header is required',
     'validation'   => 'Validation Failed!',
     'error'        => 'Something went wrong, please try again...',
+     
+    'jwt' => [
+        'TokenNotSet' => 'Bearer Token Not Set',
+        'InvalidToken' => 'Invalid Bearer Token',
+        'expiredToken' => 'Bearer Token Expired!',
+        'TokenNotFound' => 'Bearer Token Not Found'
+    ],
 
     'list' => [
         'success' => 'List Fetched Successfully',
@@ -35,26 +42,18 @@ return [
     'detail' => [
         'success' => 'Details Fetched Successfully',
         'failed'  => 'No Data Found',
-    ],
-
-    
-    'jwt' => [
-        'TokenNotSet' => 'Bearer Token Not Set',
-        'InvalidToken' => 'Invalid Bearer Token',
-        'expiredToken' => 'Bearer Token Expired!',
-        'TokenNotFound' => 'Bearer Token Not Found'
-    ],
+    ],   
 
     'login' => [
         'success' => 'Login Successful',
-        'failed'  => 'Login Faild',
+        'failed'  => 'Login Failed',
         'not-found' => 'User Not Found, Please Register First...',
         'invalid' => 'Password Does Not Match!',
         'inactive' => 'Account blocked by Admin',
-        'not-verified' => 'Email not Verified, please verify it firts...',
+        'not-verified' => 'Email not Verified, please verify it first...',
         'not-social' => 'Unable to Find Social Account',
         'invalid-social' => 'Social Id Does Not Match, Please try again...',
-        'incmail' => 'Invalid Email Address',
+        'invalid-email' => 'Invalid Email Address',
     ],
 
     'change-password' => [
@@ -63,6 +62,6 @@ return [
         'not-found' => 'User Not Found, Please Register First...',
         'invalid' => 'Old Password Does Not Match!',
         'inactive' => 'Account blocked by Admin',
-        'not-verified' => 'Email not Verified, please verify it firts...'
+        'not-verified' => 'Email not Verified, please verify it first...'
     ],
 ];

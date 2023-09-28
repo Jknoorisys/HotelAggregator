@@ -60,7 +60,7 @@ class AuthController extends Controller
             } else {
                 return response()->json([
                         'status'    => 'failed',
-                        'message'   =>  __('msg.login.incmail'),
+                        'message'   =>  __('msg.login.invalid-email'),
                 ], 400);
             }
         } catch (\Throwable $e) {
