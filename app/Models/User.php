@@ -24,12 +24,14 @@ class User extends Authenticatable implements JWTSubject
         'fname',
         'lname',
         'email',
+        'country_code',
         'phone',
         'address',
         'photo',
         'logo',
         'JWT_token',
         'password',
+        'status',
     ];
 
     /**
@@ -42,7 +44,7 @@ class User extends Authenticatable implements JWTSubject
         'created_at',
         'updated_at',
         'deleted_at',
-        ];
+    ];
 
     /**
      * The attributes that should be cast.

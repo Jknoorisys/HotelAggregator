@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('logo');
             $table->text('JWT_token');
             $table->string('password');
+            $table->enum('status', ['active', 'inactive'])->default('active');
             $table->softDeletes();
             $table->timestamps();
         });

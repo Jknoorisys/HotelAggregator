@@ -54,6 +54,7 @@ return [
     'update' => [
         'success' => 'Details Updated Successfully',
         'failed'  => 'Update Failed',
+        'not-found' => 'User Not Found',
     ],
 
     'booking' => [

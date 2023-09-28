@@ -80,6 +80,11 @@ Route::middleware(['localization'])->group(function () {
             // Manage Agents
             Route::prefix('agent')->group(function () {
                 Route::post('add' , [AgentController::class, 'add']);
+                Route::post('list' , [AgentController::class, 'list']);
+                Route::post('view' , [AgentController::class, 'view']);
+                Route::post('update' , [AgentController::class, 'update']);
+                Route::post('delete' , [AgentController::class, 'delete']);
+                Route::post('change-status' , [AgentController::class, 'changeStatus']);
             });
         });
     });
