@@ -76,6 +76,7 @@ return [
         'success' => 'Details Fetched Successfully',
         'failed'  => 'Details Not Found',
         'not-found' => ':entity not found',
+        'inactive' => 'Account blocked by Admin',
     ],   
 
     'login' => [

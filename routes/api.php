@@ -3,6 +3,8 @@
 use App\Http\Controllers\api\admin\AgentController;
 use App\Http\Controllers\api\admin\AuthController;
 use App\Http\Controllers\api\admin\ProfileController;
+use App\Http\Controllers\api\agent\AuthController as AgentAuthController;
+use App\Http\Controllers\api\agent\ProfileController as AgentProfileController;
 use App\Http\Controllers\api\hotel_beds\BookingController;
 use App\Http\Controllers\api\hotel_beds\ContentController;
 use Illuminate\Http\Request;
@@ -86,6 +88,15 @@ Route::middleware(['localization'])->group(function () {
                 Route::post('delete' , [AgentController::class, 'delete']);
                 Route::post('change-status' , [AgentController::class, 'changeStatus']);
             });
+        });
+    });
+
+    Route::prefix('agent')->group(function () {
+        Route::post('login' , [AgentAuthController::class, 'login']);
+
+        Route::middleware(['jwt.verify'])->group(function () {
+            Route::post('profile', [AgentProfileController::class, 'getProfile']);
+
         });
     });
 });

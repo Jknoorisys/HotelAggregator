@@ -1,20 +1,22 @@
 <?php
 
-namespace App\Http\Controllers\api\admin;
+namespace App\Http\Controllers\api\agent;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
-use App\Models\Admin;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+
+use function App\Helpers\validateAgent;
 
 class ProfileController extends Controller
 {
     public function getProfile(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'admin_id'   => ['required','alpha_dash', Rule::notIn('undefined')],
+            'agent_id'   => ['required','alpha_dash', Rule::notIn('undefined')],
         ]);
 
         if ($validator->fails()) {
@@ -26,12 +28,19 @@ class ProfileController extends Controller
         } 
 
         try {
-            $admin = Admin::where('id', '=', $request->admin_id)->first();
-            if (!empty($admin)) {
+            $agent = validateAgent($request->agent_id);
+            if (!empty($agent) && $agent->status == 'inactive') {
+                return response()->json([
+                    'status'    => 'failed',
+                    'message'   =>  trans('msg.detail.inactive'),
+                ], 400);
+            }
+
+            if (!empty($agent)) {
                 return response()->json([
                     'status'    => 'success',
                     'message'   => trans('msg.detail.success'),
-                    'data'      => $admin,
+                    'data'      => $agent,
                 ], 200);
             } else {
                 return response()->json([
@@ -51,9 +60,9 @@ class ProfileController extends Controller
     public function changePassword(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'admin_id'   => ['required','alpha_dash', Rule::notIn('undefined')],            
+            'agent_id' => 'required',
             'old_password' => 'required',
-            'new_password'   => ['required', 'min:8', 'max:20'],
+            'new_password'   => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -68,7 +77,7 @@ class ProfileController extends Controller
             
             $old_password = $request->old_password;
             $new_password = $request->new_password;
-            $admin  = Admin::where('id', '=', $request->admin_id)->first();
+            $admin  = User::where('id', '=', $request->agent_id)->first();
 
             if(!empty($admin)) 
             {
