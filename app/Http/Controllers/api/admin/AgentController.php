@@ -17,7 +17,6 @@ use function App\Helpers\validateAgent;
 class AgentController extends Controller
 {
     public function list(Request $request){
-        // list of agents with pagination and filters
         $validator = Validator::make($request->all(), [
             'page'      => ['required', 'numeric'],
             'search'    => ['nullable', 'string'],
