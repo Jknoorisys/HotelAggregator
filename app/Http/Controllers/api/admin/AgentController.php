@@ -86,7 +86,7 @@ class AgentController extends Controller
             'country_code' => ['required'],
             'phone'     => ['required', 'numeric', 'digits:10', Rule::unique('users')],
             'password'  => ['required', 'string', 'min:8'],
-            'address'   => ['required', 'string', 'max:255'],
+            'address'   => ['nullable', 'string', 'max:255'],
             'photo'     => ['nullable', 'image', 'mimes:jpeg,png,jpg,svg', 'max:2048'],
             'logo'      => ['nullable', 'image', 'mimes:jpeg,png,jpg,svg', 'max:2048'],
         ], $messages);
@@ -116,7 +116,7 @@ class AgentController extends Controller
                 'country_code' => $country_code,
                 'phone'     => $phone,
                 'password'  => Hash::make($password),
-                'address'   => $address,
+                'address'   => $address ? $address : '',
             ];
 
             $file = $request->file('photo');
