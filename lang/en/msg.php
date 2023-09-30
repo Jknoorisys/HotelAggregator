@@ -51,6 +51,11 @@ return [
         'failed'  => 'Add Failed',
     ],
 
+    'delete' => [
+        'success' => 'Record Deleted Successfully',
+        'failed'  => 'Delete Failed',
+    ],
+
     'update' => [
         'success' => 'Details Updated Successfully',
         'failed'  => 'Update Failed',
@@ -69,7 +74,8 @@ return [
 
     'detail' => [
         'success' => 'Details Fetched Successfully',
-        'failed'  => 'No Data Found',
+        'failed'  => 'Details Not Found',
+        'not-found' => ':entity not found',
     ],   
 
     'login' => [
@@ -89,6 +95,14 @@ return [
         'failed'  => 'Unable to update Password, please try again...',
         'not-found' => 'User Not Found, Please Register First...',
         'invalid' => 'Old Password Does Not Match!',
+        'inactive' => 'Account blocked by Admin',
+        'not-verified' => 'Email not Verified, please verify it first...'
+    ],
+
+    'change-status' => [
+        'success' => 'Status Updated Successfully',
+        'failed'  => 'Unable to update status, please try again...',
+        'not-found' => ':entity is not found',        
         'inactive' => 'Account blocked by Admin',
         'not-verified' => 'Email not Verified, please verify it first...'
     ],

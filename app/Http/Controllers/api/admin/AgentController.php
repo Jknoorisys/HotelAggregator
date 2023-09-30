@@ -12,8 +12,65 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 
+use function App\Helpers\validateAgent;
+
 class AgentController extends Controller
 {
+    public function list(Request $request){
+        // list of agents with pagination and filters
+        $validator = Validator::make($request->all(), [
+            'page'      => ['required', 'numeric'],
+            'search'    => ['nullable', 'string'],
+        ]);
+        
+        if ($validator->fails()) {
+            return response()->json([
+                'status'    => 'failed',
+                'message'   => trans('msg.validation'),
+                'errors'    => $validator->errors(),
+            ], 400);
+        } 
+
+        try {
+            
+            $page = $request->input(key: 'page', default: 1);
+            $limit = 10;
+            $offset = ($page - 1) * $limit;
+            $search = $request->search;
+
+            $agents = User::where(function ($query) use ($search) {
+                                $query->where('fname', 'LIKE', "%{$search}%")
+                                    ->orWhere('lname', 'LIKE', "%{$search}%")
+                                    ->orWhere('email', 'LIKE', "%{$search}%")
+                                    ->orWhere('phone', 'LIKE', "%{$search}%");
+                            })
+                            ->orderBy('id', 'desc')
+                            ->limit($limit)
+                            ->offset($offset)
+                            ->get();
+           
+            if (!empty($agents)) {
+                return response()->json([
+                    'status'    => 'success',
+                    'message'   => trans('msg.list.success'),
+                    'data'      => $agents,
+                ], 200);
+            } else {
+                return response()->json([
+                    'status'    => 'failed',
+                    'message'   => trans('msg.list.failed'),
+                ], 400);
+            }
+            
+        } catch (\Throwable $e) {
+            return response()->json([
+                'status'  => 'failed',
+                'message' => trans('msg.error'),
+                'error'   => $e->getMessage()
+            ], 500);
+        }
+    }
+
     public function add(Request $request)
     {
         $messages = [
@@ -136,7 +193,7 @@ class AgentController extends Controller
             } else {
                 return response()->json([
                     'status'    => 'failed',
-                    'message'   => trans('msg.detail.failed'),
+                    'message'   => trans('msg.detail.not-found', ['entity' => 'Agent']),
                 ], 400);
             }
         } catch (\Throwable $e) {
@@ -170,13 +227,7 @@ class AgentController extends Controller
         } 
 
         try {
-            $agent = User::where('id', '=', $request->agent_id)->first();
-            if (!$agent) {
-                return response()->json([
-                    'status'    => 'failed',
-                    'message'   => trans('msg.update.not-found'),
-                ], 404);
-            }
+            $agent = validateAgent($request->agent_id);
     
             $data = [
                 'fname'     => $request->input('fname', $agent->fname),
@@ -239,6 +290,87 @@ class AgentController extends Controller
                     'message'   => trans('msg.update.failed'),
                 ], 400);
             }
+        } catch (\Throwable $e) {
+            return response()->json([
+                'status'  => 'failed',
+                'message' => trans('msg.error'),
+                'error'   => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function changeStatus(Request $request){
+        $validator = Validator::make($request->all(), [
+            'agent_id'   => ['required','alpha_dash', Rule::notIn('undefined')],
+            'status'     => ['required', Rule::in(['active', 'inactive'])],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status'    => 'failed',
+                'message'   => trans('msg.validation'),
+                'errors'    => $validator->errors(),
+            ], 400);
+        } 
+
+        try {
+            $status = $request->status;
+            $agent = validateAgent($request->agent_id);
+            
+            $agent->status = $status;
+            $update = $agent->save();
+
+            if ($update) {
+                return response()->json([
+                    'status'    => 'success',
+                    'message'   => trans('msg.change-status.success'),
+                ], 200);
+            } else {
+                return response()->json([
+                    'status'    => 'failed',
+                    'message'   => trans('msg.change-status.failed'),
+                ], 400);
+            }
+            
+        } catch (\Throwable $e) {
+            return response()->json([
+                'status'  => 'failed',
+                'message' => trans('msg.error'),
+                'error'   => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function delete(Request $request){
+        $validator = Validator::make($request->all(), [
+            'agent_id'   => ['required','alpha_dash', Rule::notIn('undefined')],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status'    => 'failed',
+                'message'   => trans('msg.validation'),
+                'errors'    => $validator->errors(),
+            ], 400);
+        } 
+
+        try {
+            $agent = validateAgent($request->agent_id);
+
+            $delete = $agent->delete();
+
+            if ($delete) {
+                return response()->json([
+                    'status'    => 'success',
+                    'message'   => trans('msg.delete.success'),
+                ], 200);
+            } else {
+                return response()->json([
+                    'status'    => 'failed',
+                    'message'   => trans('msg.delete.failed'),
+                ], 400);
+            }
+            
         } catch (\Throwable $e) {
             return response()->json([
                 'status'  => 'failed',
