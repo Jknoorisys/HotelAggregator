@@ -70,8 +70,7 @@ class AgentController extends Controller
         }
     }
 
-    public function add(Request $request)
-    {
+    public function add(Request $request){
         $messages = [
             'fname.required' => 'First name is required.',
             'fname.max' => 'First name must not exceed :max characters.',
@@ -204,7 +203,7 @@ class AgentController extends Controller
         }
     }
 
-    public function update(Request $request) {
+    public function update(Request $request){
         $validator = Validator::make($request->all(), [
             'agent_id'   => ['required','alpha_dash', Rule::notIn('undefined')],
             'fname'     => ['string', 'max:255'],
