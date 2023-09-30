@@ -37,17 +37,6 @@ class AgentController extends Controller
             $offset = ($page - 1) * $limit;
             $search = $request->search;
 
-            // $agents = User::where(function ($query) use ($search) {
-            //                     $query->where('fname', 'LIKE', "%{$search}%")
-            //                         ->orWhere('lname', 'LIKE', "%{$search}%")
-            //                         ->orWhere('email', 'LIKE', "%{$search}%")
-            //                         ->orWhere('phone', 'LIKE', "%{$search}%");
-            //                 })
-            //                 ->orderBy('id', 'desc')
-            //                 ->limit($limit)
-            //                 ->offset($offset)
-            //                 ->get();
-
             $query = User::where(function ($query) use ($search) {
                                 $query->where('fname', 'LIKE', "%{$search}%")
                                     ->orWhere('lname', 'LIKE', "%{$search}%")
@@ -59,7 +48,7 @@ class AgentController extends Controller
                             ->limit($limit)
                             ->offset($offset)
                             ->get();
-                            
+
             $total = $query->count();
            
             if (!empty($agents)) {
