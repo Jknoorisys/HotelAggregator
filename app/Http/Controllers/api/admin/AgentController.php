@@ -55,11 +55,11 @@ class AgentController extends Controller
                                     ->orWhere('phone', 'LIKE', "%{$search}%");
                             });
 
-
             $agents = $query->orderBy('id', 'desc')
                             ->limit($limit)
                             ->offset($offset)
                             ->get();
+                            
             $total = $query->count();
            
             if (!empty($agents)) {
