@@ -210,7 +210,7 @@ class AgentController extends Controller
 
     public function update(Request $request){
         $validator = Validator::make($request->all(), [
-            'agent_id'   => ['required','alpha_dash', Rule::notIn('undefined')],
+            'agent_id'  => ['required','alpha_dash', Rule::notIn('undefined')],
             'fname'     => ['string', 'max:255'],
             'lname'     => ['string', 'max:255'],
             'email'     => ['email', 'max:255', Rule::unique('users')->ignore($request->agent_id)],
