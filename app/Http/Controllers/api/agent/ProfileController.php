@@ -166,7 +166,6 @@ class ProfileController extends Controller
             $update = $agent->update($data);
     
             if ($update) {
-                $agent->fresh();
                 return response()->json([
                     'status'    => 'success',
                     'message'   => trans('msg.update.success'),
