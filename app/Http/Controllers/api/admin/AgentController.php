@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 use function App\Helpers\validateAgent;
 
@@ -323,6 +324,13 @@ class AgentController extends Controller
             $update = $agent->save();
 
             if ($update) {
+
+                if($status == 'inactive'){
+                    JWTAuth::setToken($agent->JWT_token)->invalidate();
+                    $agent->JWT_token = '';
+                    $agent->save();
+                }
+
                 return response()->json([
                     'status'    => 'success',
                     'message'   => trans('msg.change-status.success'),
