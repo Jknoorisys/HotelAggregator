@@ -34,8 +34,7 @@ class AuthController extends Controller
 
             $agent  = User::where('email', '=', $email)->first();
 
-            if(!empty($agent)) 
-            {
+            if(!empty($agent)){
                 if (Hash::check($password, $agent->password)) {
 
                     if (!empty($agent) && $agent->status == 'inactive') {
