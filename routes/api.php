@@ -96,7 +96,7 @@ Route::middleware(['localization'])->group(function () {
 
         Route::middleware(['jwt.verify'])->group(function () {
             Route::post('profile', [AgentProfileController::class, 'getProfile']);
-
+            Route::post('change-password', [AgentProfileController::class, 'changePassword']);
         });
     });
 });

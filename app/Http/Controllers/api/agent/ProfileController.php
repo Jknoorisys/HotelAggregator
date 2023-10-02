@@ -62,7 +62,7 @@ class ProfileController extends Controller
         $validator = Validator::make($request->all(), [
             'agent_id' => 'required',
             'old_password' => 'required',
-            'new_password'   => 'required',
+            'new_password'   => ['required', 'min:8', 'max:20'],
         ]);
 
         if ($validator->fails()) {
