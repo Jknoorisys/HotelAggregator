@@ -77,19 +77,35 @@ class ProfileController extends Controller
             
             $old_password = $request->old_password;
             $new_password = $request->new_password;
-            $admin  = User::where('id', '=', $request->agent_id)->first();
 
-            if(!empty($admin)) 
+            $agent = validateAgent($request->agent_id);
+            if (!empty($agent) && $agent->status == 'inactive') {
+                return response()->json([
+                    'status'    => 'failed',
+                    'message'   =>  trans('msg.detail.inactive'),
+                ], 400);
+            }
+
+            if(!empty($agent)) 
             {
-                if (Hash::check($old_password, $admin->password)) {
-                    $admin->password = Hash::make($new_password);
-                    $admin->save();
-                    return response()->json([
-                        'status'    => 'success',
-                        'message'   => trans('msg.change-password.success'),
-                        'data'      => $admin,
-                    ], 200);
-                }else {
+                if (Hash::check($old_password, $agent->password)) {
+
+                    $agent->password = Hash::make($new_password);
+                    $update = $agent->save();
+
+                    if ($update) {
+                        return response()->json([
+                            'status'    => 'success',
+                            'message'   => trans('msg.change-password.success'),
+                            'data'      => $agent,
+                        ], 200);
+                    } else {
+                        return response()->json([
+                            'status'    => 'failed',
+                            'message'   => trans('msg.change-password.failed'),
+                        ], 400);
+                    }
+                } else {
                     return response()->json([
                         'status'    => 'failed',
                         'message'   => trans('msg.change-password.invalid'),

@@ -73,14 +73,23 @@ class ProfileController extends Controller
             if(!empty($admin)) 
             {
                 if (Hash::check($old_password, $admin->password)) {
+
                     $admin->password = Hash::make($new_password);
-                    $admin->save();
-                    return response()->json([
-                        'status'    => 'success',
-                        'message'   => trans('msg.change-password.success'),
-                        'data'      => $admin,
-                    ], 200);
-                }else {
+                    $update = $admin->save();
+
+                    if ($update) {
+                        return response()->json([
+                            'status'    => 'success',
+                            'message'   => trans('msg.change-password.success'),
+                            'data'      => $admin,
+                        ], 200);
+                    } else {
+                        return response()->json([
+                            'status'    => 'failed',
+                            'message'   => trans('msg.change-password.failed'),
+                        ], 400);
+                    }
+                } else {
                     return response()->json([
                         'status'    => 'failed',
                         'message'   => trans('msg.change-password.invalid'),
