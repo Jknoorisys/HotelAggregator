@@ -65,8 +65,6 @@ class ProfileController extends Controller
             'email'     => ['email', 'max:255', Rule::unique('users')->ignore($request->agent_id)],
             'phone'     => ['numeric', 'digits:10', Rule::unique('users')->ignore($request->agent_id)],
             'address'   => ['string', 'max:255'],
-            'photo'     => ['nullable', 'image', 'mimes:jpeg,png,jpg,svg', 'max:2048'],
-            'logo'      => ['nullable', 'image', 'mimes:jpeg,png,jpg,svg', 'max:2048'],
         ]);
 
         if ($validator->fails()) {
@@ -88,6 +86,50 @@ class ProfileController extends Controller
                 'phone'     => $request->input('phone', $agent->phone),
                 'address'   => $request->input('address', $agent->address),
             ];
+    
+            $update = $agent->update($data);
+    
+            if ($update) {
+                $agent->fresh();
+                return response()->json([
+                    'status'    => 'success',
+                    'message'   => trans('msg.update.success'),
+                    'data'      => $agent,
+                ], 200);
+            } else {
+                return response()->json([
+                    'status'    => 'failed',
+                    'message'   => trans('msg.update.failed'),
+                ], 400);
+            }
+        } catch (\Throwable $e) {
+            return response()->json([
+                'status'  => 'failed',
+                'message' => trans('msg.error'),
+                'error'   => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function uploadPhoto(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'agent_id'  => ['required','alpha_dash', Rule::notIn('undefined')],
+            'photo'     => ['nullable', 'image', 'mimes:jpeg,png,jpg,svg', 'max:2048'],
+            'logo'      => ['nullable', 'image', 'mimes:jpeg,png,jpg,svg', 'max:2048'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status'    => 'failed',
+                'message'   => trans('msg.validation'),
+                'errors'    => $validator->errors(),
+            ], 400);
+        } 
+
+        try {
+            $agent = validateAgent($request->agent_id);
+    
+            $data = [];
     
             $file = $request->file('photo');
             if ($file) {
