@@ -215,35 +215,27 @@ class ProfileController extends Controller
                 ], 400);
             }
 
-            if(!empty($agent)) 
-            {
-                if (Hash::check($old_password, $agent->password)) {
+            if (Hash::check($old_password, $agent->password)) {
 
-                    $agent->password = Hash::make($new_password);
-                    $update = $agent->save();
+                $agent->password = Hash::make($new_password);
+                $update = $agent->save();
 
-                    if ($update) {
-                        return response()->json([
-                            'status'    => 'success',
-                            'message'   => trans('msg.change-password.success'),
-                            'data'      => $agent,
-                        ], 200);
-                    } else {
-                        return response()->json([
-                            'status'    => 'failed',
-                            'message'   => trans('msg.change-password.failed'),
-                        ], 400);
-                    }
+                if ($update) {
+                    return response()->json([
+                        'status'    => 'success',
+                        'message'   => trans('msg.change-password.success'),
+                        'data'      => $agent,
+                    ], 200);
                 } else {
                     return response()->json([
                         'status'    => 'failed',
-                        'message'   => trans('msg.change-password.invalid'),
+                        'message'   => trans('msg.change-password.failed'),
                     ], 400);
                 }
             } else {
                 return response()->json([
                     'status'    => 'failed',
-                    'message'   => trans('msg.change-password.not-found'),
+                    'message'   => trans('msg.change-password.invalid'),
                 ], 400);
             }
         } catch (\Throwable $e) {

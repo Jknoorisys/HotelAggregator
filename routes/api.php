@@ -93,6 +93,7 @@ Route::middleware(['localization'])->group(function () {
 
     Route::prefix('agent')->group(function () {
         Route::post('login' , [AgentAuthController::class, 'login']);
+        Route::post('reset-password' , [AgentAuthController::class, 'resetPassword']);
 
         Route::middleware(['jwt.verify'])->group(function () {
             Route::post('profile', [AgentProfileController::class, 'getProfile']);

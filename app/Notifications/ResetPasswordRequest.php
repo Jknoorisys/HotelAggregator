@@ -10,13 +10,14 @@ use Illuminate\Notifications\Notification;
 class ResetPasswordRequest extends Notification
 {
     use Queueable;
+    public $message;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    public function __construct($message)
     {
-        //
+        $this->message = $message;
     }
 
     /**
@@ -26,7 +27,7 @@ class ResetPasswordRequest extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['database'];
     }
 
     /**
@@ -48,7 +49,8 @@ class ResetPasswordRequest extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            //
+            'title' => $this->message['title'],
+            'message' => $this->message['message'],
         ];
     }
 }

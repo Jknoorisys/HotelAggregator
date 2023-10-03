@@ -39,6 +39,16 @@ return [
     'notification' => [
         'agent_registered_title' => 'Agent Registration',
         'agent_registered_message' => 'Agent :name registered successfully.',
+        'password_reset_request' => ':email have requested to reset his/her password',
+        'password_reset_title' => 'Reset Password Request',
+
+    ],
+
+    'reset-password' => [
+        // 'success' => 'Password Reset Successfully',
+        // 'failed'  => 'Password Reset Failed',
+        'success' => 'Password Reset Request Sent, Please check your email to get the new Passsword',
+        'failed'  => 'Failed to Send Password Reset Request, Please try again...',
     ],
 
     'list' => [
