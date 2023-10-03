@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\User;
 use App\Notifications\AdminNotification;
+use App\Notifications\AgentNotification;
 use App\Notifications\AgentRegistration;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -325,7 +326,7 @@ class AgentController extends Controller
 
             if ($update) {
 
-                if($status == 'inactive'){
+                if($status == 'inactive' && $agent->JWT_token){
                     JWTAuth::setToken($agent->JWT_token)->invalidate();
                     $agent->JWT_token = '';
                     $agent->save();
@@ -342,6 +343,56 @@ class AgentController extends Controller
                 ], 400);
             }
             
+        } catch (\Throwable $e) {
+            return response()->json([
+                'status'  => 'failed',
+                'message' => trans('msg.error'),
+                'error'   => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function resetPassword(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'agent_id'   => ['required','alpha_dash', Rule::notIn('undefined')],
+            'password'   => ['required', 'min:8', 'max:20'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status'    => 'failed',
+                'message'   => trans('msg.validation'),
+                'errors'    => $validator->errors(),
+            ], 400);
+        } 
+
+        try {
+            $agent = validateAgent($request->agent_id);
+            if (!empty($agent)) {
+                $password = $request->password;
+                $agent->password = Hash::make($password);
+                $update = $agent->save();
+
+               if ($update) {
+
+                    $message = [];
+                    
+                    return response()->json([
+                        'status'    => 'success',
+                        'message'   => trans('msg.update.success'),
+                    ], 200);
+               } else {
+                    return response()->json([
+                        'status'    => 'failed',
+                        'message'   => trans('msg.update.failed'),
+                    ], 400);
+               }
+            } else {
+                return response()->json([
+                    'status'    => 'failed',
+                    'message'   => trans('msg.detail.not-found', ['entity' => 'Agent']),
+                ], 400);
+            }
         } catch (\Throwable $e) {
             return response()->json([
                 'status'  => 'failed',

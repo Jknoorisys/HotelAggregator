@@ -87,6 +87,7 @@ Route::middleware(['localization'])->group(function () {
                 Route::post('update' , [AgentController::class, 'update']);
                 Route::post('delete' , [AgentController::class, 'delete']);
                 Route::post('change-status' , [AgentController::class, 'changeStatus']);
+                Route::post('reset-password' , [AgentController::class, 'resetPassword']);
             });
         });
     });
