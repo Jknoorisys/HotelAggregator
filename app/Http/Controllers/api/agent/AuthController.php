@@ -115,7 +115,7 @@ class AuthController extends Controller
                 }else {
                     return response()->json([
                         'status'    => 'failed',
-                        'message'   =>  trans('msg.reset-password.invalid'),
+                        'message'   =>  trans('msg.reset-password.failed'),
                     ], 400);
                 }
             } else {
