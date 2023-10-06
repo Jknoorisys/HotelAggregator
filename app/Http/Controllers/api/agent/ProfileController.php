@@ -65,7 +65,7 @@ class ProfileController extends Controller
             'email'     => ['email', 'max:255', Rule::unique('users')->ignore($request->agent_id)],
             'iso_code'  => ['string', 'max:255'], 
             'country_code' => ['string', 'max:255'],
-            'phone'     => ['numeric', 'digits:10', Rule::unique('users')->ignore($request->agent_id)],
+            'phone'     => ['numeric', Rule::unique('users')->ignore($request->agent_id)],
             'address'   => ['string', 'max:255'],
         ]);
 
