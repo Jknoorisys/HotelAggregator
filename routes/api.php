@@ -5,6 +5,7 @@ use App\Http\Controllers\api\admin\AuthController;
 use App\Http\Controllers\api\admin\ProfileController;
 use App\Http\Controllers\api\agent\AuthController as AgentAuthController;
 use App\Http\Controllers\api\agent\ProfileController as AgentProfileController;
+use App\Http\Controllers\api\agent\QuotationController;
 use App\Http\Controllers\api\hotel_beds\BookingController;
 use App\Http\Controllers\api\hotel_beds\ContentController;
 use Illuminate\Http\Request;
@@ -101,6 +102,7 @@ Route::middleware(['localization'])->group(function () {
             Route::post('update-profile' , [AgentProfileController::class, 'updateProfile']);
             Route::post('upload' , [AgentProfileController::class, 'uploadPhoto']);
             Route::post('change-password', [AgentProfileController::class, 'changePassword']);
+            Route::post('quotation-history', [QuotationController::class, 'history']);
         });
     });
 });
