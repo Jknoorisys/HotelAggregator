@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('fname');
             $table->string('lname');
             $table->string('email')->unique();
+            $table->string('iso_code');
             $table->string('country_code');
             $table->string('phone')->unique();
             $table->string('address');

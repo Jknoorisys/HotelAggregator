@@ -89,6 +89,7 @@ class AgentController extends Controller
         $validator = Validator::make($request->all(), [
             'fname'     => ['required', 'string', 'max:255'],
             'lname'     => ['required', 'string', 'max:255'],
+            'iso_code'  => ['required'],
             'email'     => ['required', 'email', 'max:255', Rule::unique('users')],
             'country_code' => ['required'],
             'phone'     => ['required', 'numeric', 'digits:10', Rule::unique('users')],
@@ -111,6 +112,7 @@ class AgentController extends Controller
             $fname = $request->fname;
             $lname = $request->lname;
             $email = $request->email;
+            $iso_code = $request->iso_code;
             $country_code = $request->country_code;
             $phone = $request->phone;
             $address = $request->address;
@@ -120,6 +122,7 @@ class AgentController extends Controller
                 'fname'     => $fname,
                 'lname'     => $lname,
                 'email'     => $email,
+                'iso_code'  => $iso_code,
                 'country_code' => $country_code,
                 'phone'     => $phone,
                 'password'  => Hash::make($password),
@@ -217,6 +220,8 @@ class AgentController extends Controller
             'agent_id'  => ['required','alpha_dash', Rule::notIn('undefined')],
             'fname'     => ['string', 'max:255'],
             'lname'     => ['string', 'max:255'],
+            'iso_code'  => ['string', 'max:255'],
+            'country_code' => ['string', 'max:255'],
             'email'     => ['email', 'max:255', Rule::unique('users')->ignore($request->agent_id)],
             'phone'     => ['numeric', 'digits:10', Rule::unique('users')->ignore($request->agent_id)],
             'password'  => ['string', 'min:8'],
@@ -240,6 +245,7 @@ class AgentController extends Controller
                 'fname'     => $request->input('fname', $agent->fname),
                 'lname'     => $request->input('lname', $agent->lname),
                 'email'     => $request->input('email', $agent->email),
+                'iso_code'  => $request->input('iso_code', $agent->iso_code),
                 'country_code' => $request->input('country_code', $agent->country_code),
                 'phone'     => $request->input('phone', $agent->phone),
                 'address'   => $request->input('address', $agent->address),
