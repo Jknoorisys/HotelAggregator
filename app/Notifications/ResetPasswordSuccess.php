@@ -7,13 +7,12 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class AgentRegistration extends Notification
+class ResetPasswordSuccess extends Notification
 {
     use Queueable;
     public $name;
     public $email;
     public $password;
-
     /**
      * Create a new notification instance.
      */
@@ -40,13 +39,13 @@ class AgentRegistration extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                ->subject(trans('msg.email.agent_credentials.subject'))
-                ->greeting(trans('msg.email.agent_credentials.greeting', ['name' => $this->name]))
-                ->line(trans('msg.email.agent_credentials.email', ['email' => $this->email]))
-                ->line(trans('msg.email.agent_credentials.password', ['password' => $this->password]))
-                ->line(trans('msg.email.agent_credentials.keep_secure'))
-                ->action(trans('msg.email.agent_credentials.login'), route('/'))
-                ->line(trans('msg.email.agent_credentials.thank_you'));
+                ->subject(trans('msg.email.reset-password.subject'))
+                ->greeting(trans('msg.email.reset-password.greeting', ['name' => $this->name]))
+                ->line(trans('msg.email.reset-password.message'))
+                ->line(trans('msg.email.reset-password.password', ['password' => $this->password]))
+                ->line(trans('msg.email.reset-password.keep_secure'))
+                ->action(trans('msg.email.reset-password.login'), route('/'))
+                ->line(trans('msg.email.reset-password.thank_you'));
     }
 
     /**

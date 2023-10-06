@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Notifications\AdminNotification;
 use App\Notifications\AgentNotification;
 use App\Notifications\AgentRegistration;
+use App\Notifications\ResetPasswordSuccess;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
@@ -375,7 +376,7 @@ class AgentController extends Controller
 
                if ($update) {
 
-                    $message = [];
+                    $agent->notify(new ResetPasswordSuccess($agent->fname, $agent->email, $password));
                     
                     return response()->json([
                         'status'    => 'success',

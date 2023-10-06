@@ -27,9 +27,19 @@ return [
     'email' => [
         'agent_credentials' => [
             'subject' => 'Your Agent Credentials',
-            'greeting' => 'Hello :name',
+            'greeting' => 'Hello :name!',
             'email' => 'Your Email: :email',
             'password' => 'Your Password: :password',
+            'keep_secure' => 'Please keep your credentials secure.',
+            'login' => 'Login',
+            'thank_you' => 'Thank you for using our service!',
+        ],
+
+        'reset-password' => [
+            'subject' => 'Password Reset Successful',
+            'greeting' => 'Hello :name!',
+            'message' => 'Your password has been reset successfully.',
+            'password' => 'Your new password is: :password',
             'keep_secure' => 'Please keep your credentials secure.',
             'login' => 'Login',
             'thank_you' => 'Thank you for using our service!',
