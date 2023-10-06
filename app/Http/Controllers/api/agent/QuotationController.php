@@ -58,6 +58,7 @@ class QuotationController extends Controller
                 return response()->json([
                     'status'    => 'success',
                     'message'   => trans('msg.list.success'),
+                    'total'     => $total,
                     'data'      => $quotations,
                 ], 200);
             } else {
