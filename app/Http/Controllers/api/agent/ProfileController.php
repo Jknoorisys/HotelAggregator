@@ -142,8 +142,9 @@ class ProfileController extends Controller
                 }
         
                 $extension = $file->getClientOriginalExtension();
-                $filename = time().'.'.$extension;
-                $image_url = $file->move('assets/uploads/agent-photos/', $filename);
+                $image_name = time().'.'.$extension;
+                $upload = $file->move('assets/uploads/agent-photos/', $image_name);
+                $image_url = 'assets/uploads/agent-photos/'. $image_name;
                 $data['photo'] = $image_url;
             }
     
@@ -159,7 +160,8 @@ class ProfileController extends Controller
 
                 $extension = $logo->getClientOriginalExtension();
                 $logo_name = time().'.'.$extension;
-                $logo_url = $logo->move('assets/uploads/agent-logos/', $logo_name);
+                $upload = $logo->move('assets/uploads/agent-logos/', $logo_name);
+                $logo_url = 'assets/uploads/agent-logos/'. $logo_name;
                 $data['logo'] = $logo_url; 
             }
     
